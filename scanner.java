@@ -1,7 +1,7 @@
 package com.company;
 
 public class Scanner {
-    public public ArrayList<String> scanner(String s) {
+     public ArrayList<String> scanner(String s) {
         ArrayList<String> arr = new ArrayList<String>();
         String program;
         int len = 0;
