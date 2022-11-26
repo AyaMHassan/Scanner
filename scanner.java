@@ -7,7 +7,7 @@ public class Scanner {
         int len = 0;
         String state = "START";
         String token = "";
-        String prevState = "";
+        String type = "";
         for (int i = 0; i < len; i++) {
             if (state == "START") {
 
