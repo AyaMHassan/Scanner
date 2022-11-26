@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Scanner extends Application {
-    public void scanner(){
-        String[]arr;
+    public String[] scanner(String s){
+        String[]arr={String.valueOf(0)};
         int len = 0;
         String state = "START";
         String token = "";
@@ -40,6 +40,7 @@ public class Scanner extends Application {
 
             }
         }
+        return arr;
     }
 
     public void start(Stage stage) throws IOException {
