@@ -1,8 +1,8 @@
 package com.company;
 
 public class Scanner {
-    public String[] scanner(String s) {
-        String[] arr = {String.valueOf(0)};
+    public public ArrayList<String> scanner(String s) {
+        ArrayList<String> arr = new ArrayList<String>();
         String program;
         int len = 0;
         String state = "START";
