@@ -38,9 +38,10 @@ public class Scanner {
                 }
                 else if(program.charAt(i) == 'e'){
                     state = "INRESERVEDWORDS";
-                    substate = "END";
+                    substate = "END_ELSE";
                     i = i-1;
                 }
+          
                 else if(program.charAt(i) == 'r'){
                     state = "INRESERVEDWORDS";
                     substate = "REPEAT_READ";
@@ -143,7 +144,7 @@ public class Scanner {
                             if(i+3 == len){
                                 state = "DONE";
                                 type = "END";
-                                i = i + 3;
+                                i = i + 1;
                             }
                             else if (program.charAt(i + 3) == '\n' || program.charAt(i + 3) == ' ' || program.charAt(i + 3) == '\t') {
                                 state = "DONE";
