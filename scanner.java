@@ -76,16 +76,22 @@ public class Scanner {
                 }
 
             }
-             else if (state == "INRESERVEDWORDS"){
+        else if (state == "INRESERVEDWORDS"){
                 if(substate == "IF"){
                     if(i + 2 <= len) {
                         if (program.substring(i, i + 2).equals("if")) {
                                 token += "if";
-                                if (program.charAt(i + 2) == '\n' || program.charAt(i + 2) == ' ' || program.charAt(i + 2) == '\t' || program.charAt(i + 2) == '(') {
+                                if (program.charAt(i + 2) == '\n' || program.charAt(i + 2) == ' ' || program.charAt(i + 2) == '\t' ) {
                                     state = "DONE";
                                     type = substate;
                                     i = i + 2;
-                                } else {
+                                }
+                                else if(program.charAt(i + 2) == '('){
+                                    state = "DONE";
+                                    type = substate;
+                                    i = i + 1;
+                                }
+                                else {
                                     state = "INID";
                                     i = i + 1;
                                 }
@@ -178,10 +184,15 @@ public class Scanner {
                     if(i+5 < len){
                         if(program.substring(i,i+5).equals("until")){
                             token+="until";
-                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t' ||  program.charAt(i+5) == '('){
+                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t'){
                                 state = "DONE";
                                 type = substate;
                                 i = i + 5;
+                            }
+                            else if(program.charAt(i + 5) == '('){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 4;
                             }
                             else{
                                 state = "INID";
@@ -198,10 +209,15 @@ public class Scanner {
                     if(i+5 < len){
                         if(program.substring(i,i+5).equals("write")){
                             token+="write";
-                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t' || program.charAt(i+5) == '('){
+                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t' ){
                                 state = "DONE";
                                 type = substate;
                                 i = i + 5;
+                            }
+                            else if(program.charAt(i + 5) == '('){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 4;
                             }
                             else{
                                 state = "INID";
