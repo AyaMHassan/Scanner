@@ -229,7 +229,7 @@ public class Scanner {
                 if((program.charAt(i)==':') &&(program.charAt(i+1)=='=')){
                     i=i+1;
                     token+=":=";
-                    type="INASSIGN";
+                    type="assign";
                     state="DONE";
                 }
 
