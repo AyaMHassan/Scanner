@@ -27,6 +27,36 @@ public class Scanner {
         String type = "";
         for (int i = 0; i < len; i++) {
             if (state == "START") {
+               if(program.charAt(i) == 'i'){
+                    state = "INRESERVEDWORDS";
+                    substate = "IF";
+                    i = i-1;
+                }
+                else if(program.charAt(i) == 't'){
+                    state = "INRESERVEDWORDS";
+                    substate = "THEN";
+                    i = i-1;
+                }
+                else if(program.charAt(i) == 'e'){
+                    state = "INRESERVEDWORDS";
+                    substate = "END";
+                    i = i-1;
+                }
+                else if(program.charAt(i) == 'r'){
+                    state = "INRESERVEDWORDS";
+                    substate = "REPEAT_READ";
+                    i = i-1;
+                }
+                else if(program.charAt(i) == 'u'){
+                    state = "INRESERVEDWORDS";
+                    substate = "UNTIL";
+                    i = i-1;
+                }
+                else if(program.charAt(i) == 'w'){
+                    state = "INRESERVEDWORDS";
+                    substate = "WRITE";
+                    i = i-1;
+                }
                 if ((program.charAt(i) == ';') || (program.charAt(i) == '<') || (program.charAt(i) == '=') || (program.charAt(i) == '+') || (program.charAt(i) == '-') || (program.charAt(i) == '*') || (program.charAt(i) == '/') || (program.charAt(i) == '(') || (program.charAt(i) == ')')) {
                     state = "INSYMBOL";
                     i = i - 1;
@@ -38,9 +68,147 @@ public class Scanner {
                     i = i - 1;
                 }
 
-            } else if (state == "INRESERVEDWORDS") {
+            }
+            else if (state == "INRESERVEDWORDS"){
+                if(substate == "IF"){
+                    if(i + 2 <= len) {
+                        if (program.substring(i, i + 2) == "if") {
+                                token += "if";
+                                if (program.charAt(i + 2) == '\n' || program.charAt(i + 2) == ' ' || program.charAt(i + 2) == '\t') {
+                                    state = "DONE";
+                                    type = substate;
+                                    i = i + 2;
+                                } else {
+                                    state = "INID";
+                                    i = i + 1;
+                                }
+                        }
+                    }
+                    else{
+                        i = i - 1;
+                        state = "INID";
+                    }
+                }
+                else if (substate == "THEN"){
+                    if(i+4 <= len) {
+                        if (program.substring(i, i + 4) == "then") {
+                            token += "then";
+                            if (program.charAt(i + 4) == '\n' || program.charAt(i + 4) == ' ' || program.charAt(i + 4) == '\t') {
+                                state = "DONE";
+                                type = substate;
+                                i = i + 4;
+                            } else {
+                                state = "INID";
+                                i = i + 3;
+                            }
+                        }
+                    }
+                    else{
+                        i = i - 1;
+                        state = "INID";
+                    }
+                }
+                else if (substate == "END"){
+                    if(i+3 <= len){
+                        if(program.substring(i,i+3) == "end") {
+                            token += "end";
+                            if(i+3 == len){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 3;
+                            }
+                            else if (program.charAt(i + 3) == '\n' || program.charAt(i + 3) == ' ' || program.charAt(i + 3) == '\t') {
+                                state = "DONE";
+                                type = substate;
+                                i = i + 3;
+                            } else {
+                                state = "INID";
+                                i = i + 2;
+                            }
+                        }
+                    }
+                    else{
+                        i = i - 1;
+                        state = "INID";
+                    }
+                }
+                else if(substate == "REPEAT_READ"){
+                    if(i+6 < len){
+                        if(program.substring(i,i+6) == "repeat"){
+                            token+="repeat";
+                            if(program.charAt(i+6) == '\n' || program.charAt(i+6) == ' ' || program.charAt(i+6) == '\t'){
+                                state = "DONE";
+                                type = "REPEAT";
+                                i = i + 6;
+                            }
+                            else{
+                                state = "INID";
+                                i = i + 5;
+                            }
+                            continue;
+                        }
+                    }
+                    if(i+4 < len){
+                        if(program.substring(i,i+4) == "read"){
+                            token+="read";
+                            if(program.charAt(i+4) == '\n' || program.charAt(i+4) == ' ' || program.charAt(i+4) == '\t'){
+                                state = "DONE";
+                                type = "READ";
+                                i = i + 4;
+                            }
+                            else{
+                                state = "INID";
+                                i = i + 3;
+                            }
+                            continue;
+                    }
+                    }
+                        i = i - 1;
+                        state = "INID";
+                }
 
-            } else if (state == "INNUM") {
+                else if(substate == "UNTIL"){
+                    if(i+5 < len){
+                        if(program.substring(i,i+5) == "until"){
+                            token+="until";
+                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t'){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 5;
+                            }
+                            else{
+                                state = "INID";
+                                i = i + 4;
+                            }
+                        }
+                    }
+                    else{
+                        i = i - 1;
+                        state = "INID";
+                    }
+                }
+                else if(substate == "WRITE"){
+                    if(i+5 < len){
+                        if(program.substring(i,i+5) == "write"){
+                            token+="write";
+                            if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t'){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 5;
+                            }
+                            else{
+                                state = "INID";
+                                i = i + 4;
+                            }
+                        }
+                    }
+                    else{
+                        i = i - 1;
+                        state = "INID";
+                    }
+                }
+            }
+             else if (state == "INNUM") {
 
             } else if (state == "INID") {
 
