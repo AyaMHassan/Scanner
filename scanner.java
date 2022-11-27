@@ -121,29 +121,44 @@ public class Scanner {
                         state = "INID";
                     }
                 }
-                else if (substate == "END"){
+                else if (substate == "END_ELSE"){
+                    if(i+4 < len){
+                        if(program.substring(i,i+4).equals("else")){
+                            token+="else";
+                            if(program.charAt(i+4) == '\n' || program.charAt(i+4) == ' ' || program.charAt(i+4) == '\t'){
+                                state = "DONE";
+                                type = "ELSE";
+                                i = i + 4;
+                            }
+                            else{
+                                state = "INID";
+                                i = i + 3;
+                            }
+                            continue;
+                        }
+                    }
                     if(i+3 <= len){
                         if(program.substring(i,i+3).equals("end")) {
                             token += "end";
                             if(i+3 == len){
                                 state = "DONE";
-                                type = substate;
+                                type = "END";
                                 i = i + 3;
                             }
                             else if (program.charAt(i + 3) == '\n' || program.charAt(i + 3) == ' ' || program.charAt(i + 3) == '\t') {
                                 state = "DONE";
-                                type = substate;
+                                type = "END";
                                 i = i + 3;
                             } else {
                                 state = "INID";
                                 i = i + 2;
                             }
+                            continue;
                         }
                     }
-                    else{
                         i = i - 1;
                         state = "INID";
-                    }
+                    
                 }
                 else if(substate == "REPEAT_READ"){
                     if(i+6 < len){
