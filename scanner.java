@@ -122,7 +122,7 @@ public class Scanner {
                         state = "INID";
                     }
                 }
-                else if (substate == "END_ELSE"){
+               else if (substate == "END_ELSE"){
                     if(i+4 < len){
                         if(program.substring(i,i+4).equals("else")){
                             token+="else";
@@ -149,7 +149,12 @@ public class Scanner {
                             else if (program.charAt(i + 3) == '\n' || program.charAt(i + 3) == ' ' || program.charAt(i + 3) == '\t') {
                                 state = "DONE";
                                 type = "END";
-                                i = i + 3;
+                                if(i + 4 < len){
+                                    i = i + 3;
+                                }
+                                else {
+                                    i = i + 1;
+                                }
                             } else {
                                 state = "INID";
                                 i = i + 2;
@@ -159,7 +164,7 @@ public class Scanner {
                     }
                         i = i - 1;
                         state = "INID";
-                    
+
                 }
                 else if(substate == "REPEAT_READ"){
                     if(i+6 < len){
