@@ -107,13 +107,7 @@ public class Scanner {
                 i=i-1;
 
             } else if (state == "INCOMMENT") {
-                int j;
-                for( j=i;j<len;j++){
-                    if(program.charAt(j)=='}') break;
-                }
-                i=j;
-                state="START";
-
+                
             }
         }
         return arr;
