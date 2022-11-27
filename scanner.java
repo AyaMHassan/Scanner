@@ -259,7 +259,7 @@ public class Scanner {
             } else if (state == "INID") {
                   if(((program.charAt(i)>='a')&&(program.charAt(i)<='z'))||((program.charAt(i)>='A')&&(program.charAt(i)<='Z'))){
                     token+=program.charAt(i);
-                    type="Identifier";
+                    type="IDENTIFIER";
                 }
                 else {
                     i=i-1;
