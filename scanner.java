@@ -77,7 +77,7 @@ public class Scanner {
                 }
 
             }
-        else if (state == "INRESERVEDWORDS"){
+              else if (state == "INRESERVEDWORDS"){
                 if(substate == "IF"){
                     if(i + 2 <= len) {
                         if (program.substring(i, i + 2).equals("if")) {
@@ -87,7 +87,7 @@ public class Scanner {
                                     type = substate;
                                     i = i + 2;
                                 }
-                                else if(program.charAt(i + 2) == '('){
+                                else if(program.charAt(i + 2) == '(' || program.charAt(i + 2) == '{'){
                                     state = "DONE";
                                     type = substate;
                                     i = i + 1;
@@ -111,7 +111,13 @@ public class Scanner {
                                 state = "DONE";
                                 type = substate;
                                 i = i + 4;
-                            } else {
+                            }
+                            else if(program.charAt(i + 4) == '{'){
+                                state = "DONE";
+                                type = substate;
+                                i = i + 3;
+                            }
+                            else {
                                 state = "INID";
                                 i = i + 3;
                             }
@@ -122,7 +128,7 @@ public class Scanner {
                         state = "INID";
                     }
                 }
-               else if (substate == "END_ELSE"){
+                else if (substate == "END_ELSE"){
                     if(i+4 < len){
                         if(program.substring(i,i+4).equals("else")){
                             token+="else";
@@ -130,6 +136,11 @@ public class Scanner {
                                 state = "DONE";
                                 type = "ELSE";
                                 i = i + 4;
+                            }
+                            else if(program.charAt(i + 4) == '{'){
+                                state = "DONE";
+                                type = "ELSE";
+                                i = i + 3;
                             }
                             else{
                                 state = "INID";
@@ -155,14 +166,20 @@ public class Scanner {
                                 else {
                                     i = i + 2;
                                 }
-                            } else {
+                            }
+                            else if(program.charAt(i + 3) == '{'){
+                                state = "DONE";
+                                type = "END";
+                                i = i + 2;
+                            }
+                            else {
                                 state = "INID";
                                 i = i + 2;
                             }
                             continue;
                         }
                     }
-                        i = i - 1;
+                        i = i /*331*/- 1;
                         state = "INID";
 
                 }
@@ -174,6 +191,11 @@ public class Scanner {
                                 state = "DONE";
                                 type = "REPEAT";
                                 i = i + 6;
+                            }
+                            else if(program.charAt(i + 6) == '{'){
+                                state = "DONE";
+                                type = "REPEAT";
+                                i = i + 5;
                             }
                             else{
                                 state = "INID";
@@ -189,6 +211,11 @@ public class Scanner {
                                 state = "DONE";
                                 type = "READ";
                                 i = i + 4;
+                            }
+                            else if(program.charAt(i + 4) == '{'){
+                                state = "DONE";
+                                type = "READ";
+                                i = i + 3;
                             }
                             else{
                                 state = "INID";
@@ -210,7 +237,7 @@ public class Scanner {
                                 type = substate;
                                 i = i + 5;
                             }
-                            else if(program.charAt(i + 5) == '('){
+                            else if(program.charAt(i + 5) == '(' || program.charAt(i + 5) == '{'){
                                 state = "DONE";
                                 type = substate;
                                 i = i + 4;
@@ -235,7 +262,7 @@ public class Scanner {
                                 type = substate;
                                 i = i + 5;
                             }
-                            else if(program.charAt(i + 5) == '('){
+                            else if(program.charAt(i + 5) == '(' || program.charAt(i + 5) == '{'){
                                 state = "DONE";
                                 type = substate;
                                 i = i + 4;
@@ -252,7 +279,6 @@ public class Scanner {
                     }
                 }
             }
-
              else if (state == "INNUM") {
                 if((program.charAt(i)>='0')&&(program.charAt(i)<='9')){
                     token = token + program.charAt(i);
