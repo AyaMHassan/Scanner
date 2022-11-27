@@ -99,7 +99,7 @@ public class Scanner {
                     substate = "WRITE";
                     i = i-1;
                 }
-                }
+                
                 else if ((program.charAt(i) == ';') || (program.charAt(i) == '<') || (program.charAt(i) == '=') || (program.charAt(i) == '+') || (program.charAt(i) == '-') || (program.charAt(i) == '*') || (program.charAt(i) == '/') || (program.charAt(i) == '(') || (program.charAt(i) == ')')) {
                     state = "INSYMBOL";
                     i = i - 1;
