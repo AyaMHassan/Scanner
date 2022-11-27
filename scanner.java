@@ -77,7 +77,7 @@ public class Scanner {
                 }
 
             }
-              else if (state == "INRESERVEDWORDS"){
+                     else if (state == "INRESERVEDWORDS"){
                 if(substate == "IF"){
                     if(i + 2 <= len) {
                         if (program.substring(i, i + 2).equals("if")) {
@@ -96,6 +96,10 @@ public class Scanner {
                                     state = "INID";
                                     i = i + 1;
                                 }
+                        }
+                        else{
+                            i = i - 1;
+                            state = "INID";
                         }
                     }
                     else{
@@ -122,6 +126,10 @@ public class Scanner {
                                 i = i + 3;
                             }
                         }
+                        else{
+                            i = i - 1;
+                            state = "INID";
+                        }
                     }
                     else{
                         i = i - 1;
@@ -146,6 +154,11 @@ public class Scanner {
                                 state = "INID";
                                 i = i + 3;
                             }
+                            continue;
+                        }
+                        else{
+                            i = i - 1;
+                            state = "INID";
                             continue;
                         }
                     }
@@ -178,8 +191,13 @@ public class Scanner {
                             }
                             continue;
                         }
+                        else{
+                            i = i - 1;
+                            state = "INID";
+                            continue;
+                        }
                     }
-                        i = i /*331*/- 1;
+                        i = i - 1;
                         state = "INID";
 
                 }
@@ -203,6 +221,11 @@ public class Scanner {
                             }
                             continue;
                         }
+                        else{
+                            i = i - 1;
+                            state = "INID";
+                            continue;
+                        }
                     }
                     if(i+4 < len){
                         if(program.substring(i,i+4).equals("read")){
@@ -223,6 +246,11 @@ public class Scanner {
                             }
                             continue;
                     }
+                        else{
+                            i = i - 1;
+                            state = "INID";
+                            continue;
+                        }
                     }
                         i = i - 1;
                         state = "INID";
@@ -246,6 +274,10 @@ public class Scanner {
                                 state = "INID";
                                 i = i + 4;
                             }
+                        }
+                        else{
+                            i = i - 1;
+                            state = "INID";
                         }
                     }
                     else{
@@ -271,6 +303,10 @@ public class Scanner {
                                 state = "INID";
                                 i = i + 4;
                             }
+                        }
+                        else{
+                            i = i - 1;
+                            state = "INID";
                         }
                     }
                     else{
