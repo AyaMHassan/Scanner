@@ -153,7 +153,7 @@ public class Scanner {
                                     i = i + 3;
                                 }
                                 else {
-                                    i = i + 1;
+                                    i = i + 2;
                                 }
                             } else {
                                 state = "INID";
