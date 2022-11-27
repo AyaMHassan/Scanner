@@ -21,6 +21,7 @@ public class Scanner {
      public static ArrayList<String> scanner(String s) {
         ArrayList<String> arr = new ArrayList<String>();
         String program=s;
+        String substate = "";
         int len = program.length();
         String state = "START";
         String token = "";
