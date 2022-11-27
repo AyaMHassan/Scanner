@@ -67,6 +67,9 @@ public class Scanner {
                 }else if (program.charAt(i) == ':') {
                     state = "INASSIGN";
                     i = i - 1;
+                }else if(((program.charAt(i)>='a')&&(program.charAt(i)<='z'))||((program.charAt(i)>='A')&&(program.charAt(i)<='Z'))){
+                    state="INID";
+                    i=i-1;
                 }
 
             }
@@ -212,6 +215,14 @@ public class Scanner {
              else if (state == "INNUM") {
 
             } else if (state == "INID") {
+                  if(((program.charAt(i)>='a')&&(program.charAt(i)<='z'))||((program.charAt(i)>='A')&&(program.charAt(i)<='Z'))){
+                    token+=program.charAt(i);
+                    type="Identifier";
+                }
+                else {
+                    i=i-1;
+                    state="DONE";
+                }
 
             } else if (state == "INASSIGN") {
                 
@@ -276,7 +287,12 @@ public class Scanner {
                 i=i-1;
 
             } else if (state == "INCOMMENT") {
-                
+                int j;
+                for( j=i;j<len;j++){
+                    if(program.charAt(j)=='}') break;
+                }
+                i=j;
+                state="START";
             }
         }
         return arr;
