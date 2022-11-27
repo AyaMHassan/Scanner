@@ -73,7 +73,7 @@ public class Scanner {
             else if (state == "INRESERVEDWORDS"){
                 if(substate == "IF"){
                     if(i + 2 <= len) {
-                        if (program.substring(i, i + 2) == "if") {
+                        if (program.substring(i, i + 2).equals("if")) {
                                 token += "if";
                                 if (program.charAt(i + 2) == '\n' || program.charAt(i + 2) == ' ' || program.charAt(i + 2) == '\t') {
                                     state = "DONE";
@@ -92,7 +92,7 @@ public class Scanner {
                 }
                 else if (substate == "THEN"){
                     if(i+4 <= len) {
-                        if (program.substring(i, i + 4) == "then") {
+                        if (program.substring(i, i + 4).equals("then")) {
                             token += "then";
                             if (program.charAt(i + 4) == '\n' || program.charAt(i + 4) == ' ' || program.charAt(i + 4) == '\t') {
                                 state = "DONE";
@@ -111,7 +111,7 @@ public class Scanner {
                 }
                 else if (substate == "END"){
                     if(i+3 <= len){
-                        if(program.substring(i,i+3) == "end") {
+                        if(program.substring(i,i+3).equals("end")) {
                             token += "end";
                             if(i+3 == len){
                                 state = "DONE";
@@ -135,7 +135,7 @@ public class Scanner {
                 }
                 else if(substate == "REPEAT_READ"){
                     if(i+6 < len){
-                        if(program.substring(i,i+6) == "repeat"){
+                        if(program.substring(i,i+6).equals("repeat")){
                             token+="repeat";
                             if(program.charAt(i+6) == '\n' || program.charAt(i+6) == ' ' || program.charAt(i+6) == '\t'){
                                 state = "DONE";
@@ -150,7 +150,7 @@ public class Scanner {
                         }
                     }
                     if(i+4 < len){
-                        if(program.substring(i,i+4) == "read"){
+                        if(program.substring(i,i+4).equals("read")){
                             token+="read";
                             if(program.charAt(i+4) == '\n' || program.charAt(i+4) == ' ' || program.charAt(i+4) == '\t'){
                                 state = "DONE";
@@ -170,7 +170,7 @@ public class Scanner {
 
                 else if(substate == "UNTIL"){
                     if(i+5 < len){
-                        if(program.substring(i,i+5) == "until"){
+                        if(program.substring(i,i+5).equals("until")){
                             token+="until";
                             if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t'){
                                 state = "DONE";
@@ -190,7 +190,7 @@ public class Scanner {
                 }
                 else if(substate == "WRITE"){
                     if(i+5 < len){
-                        if(program.substring(i,i+5) == "write"){
+                        if(program.substring(i,i+5).equals("write")){
                             token+="write";
                             if(program.charAt(i+5) == '\n' || program.charAt(i+5) == ' ' || program.charAt(i+5) == '\t'){
                                 state = "DONE";
