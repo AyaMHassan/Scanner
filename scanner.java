@@ -116,7 +116,7 @@ public class Scanner {
                             if(i+3 == len){
                                 state = "DONE";
                                 type = substate;
-                                i = i + 3;
+                                i = i + 1;
                             }
                             else if (program.charAt(i + 3) == '\n' || program.charAt(i + 3) == ' ' || program.charAt(i + 3) == '\t') {
                                 state = "DONE";
