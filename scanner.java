@@ -22,13 +22,15 @@ class Node {
     String value;
     ArrayList<Node> children;
     Node sibling;
+    String type;
     public Node(){}
-    public Node(String n, String v, ArrayList<Node> c, Node s)
+    public Node(String n, String v, ArrayList<Node> c, Node s, String t)
     {
         name = n;
         value = v;
         children = c;
         sibling = s;
+        type = t;
     }
 }
 
