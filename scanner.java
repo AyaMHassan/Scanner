@@ -4,16 +4,52 @@ import java.io.*;
 import java.util.ArrayList;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Stack;  
+
+class Token {
+    String token_value;
+    String token_type;
+    public Token(){}
+    public Token(String v, String t)
+    {
+        token_value = v;
+        token_type = t;
+    }
+}
+
+class Node {
+    String name;
+    String value;
+    ArrayList<Node> children;
+    Node sibling;
+    public Node(){}
+    public Node(String n, String v, ArrayList<Node> c, Node s)
+    {
+        name = n;
+        value = v;
+        children = c;
+        sibling = s;
+    }
+}
 
 
 public class Scanner {
-     public static void main(String[] args) throws IOException {
+    static Stack<Token> scanner_output = new Stack<>();  
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
        String s = read("D:\\Old data 26-11-2020\\Documents\\bas\\example.txt");
        ArrayList<String> a=scanner(s);
-       for (int i = 0; i < a.size() ; i++)
+//       for (int i = 0; i < a.size() ; i++)
+//       {
+//           System.out.print(a.get(i));
+//       }
+       parser(a);
+       Node n = match(new Token("if", "IF"));
+       System.out.println(n.name);
+       while(!scanner_output.empty())
        {
-           System.out.print(a.get(i));
+           Token t = scanner_output.pop();
+           System.out.println(t.token_value +" " +t.token_type);
        }
     }
      public static ArrayList<String> scanner(String s) {
@@ -490,4 +526,28 @@ public class Scanner {
         br.close();
         return program;
   }
+   public static Node parser(ArrayList<String> input)
+   {
+       for (int i = input.size() - 1; i >= 0  ; i--)
+       {
+           String[] tv = input.get(i).split(" , "); //[value, type]
+           Token t = new Token(tv[0], tv[1].substring(0, tv[1].length() - 1));
+           scanner_output.push(t);
+       }
+      return null; 
+   }
+   public static Node match(Token expected_token)
+   {
+       Node n = new Node();
+       if(scanner_output.peek().token_type.equals(expected_token.token_type))
+       {
+           scanner_output.pop();
+           n.name = "accept";
+       }
+       else
+       {
+           n.name = "error";
+       }
+       return n;
+   }
 }
