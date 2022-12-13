@@ -552,4 +552,149 @@ public class Scanner {
        }
        return n;
    }
+    public static Node stmt_sequence(){
+        Node n=new Node();
+        
+        n = statement();
+        Node temp=n;
+       if (n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+       }
+              
+
+       while ((!scanner_output.empty()) &&(scanner_output.peek().token_type.equals("SEMICOLON"))) {
+           if (match(new Token(";", "SEMICOLON")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+           Node s=statement();
+           if ( s.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }
+           
+           temp.sibling=s;
+           temp=s;
+
+       }
+           
+       return n;
+    }
+   public static Node statement(){
+        Node n=new Node();
+        if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("IF"))){
+            n=if_stmt();
+            if ( n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }            
+        }
+        else if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("REPEAT"))){
+            n=repeat_stmt();
+            if ( n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }            
+        }
+        else if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("IDENTIFIER"))){
+            n=assign_stmt();
+            if ( n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }            
+        }
+        else if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("READ"))){
+            n=read_stmt();
+            if ( n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }            
+        }
+        else if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("WRITE"))){
+            n=write_stmt();
+            if ( n.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }            
+        }
+        else{
+            return new Node("error", null, null, null, null);            
+        }
+        
+
+        return n;
+    }
+   public static Node if_stmt(){
+        Node n=new Node();
+        if (match(new Token("if", "IF")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+        n.name="if";
+        Node e=exp();
+        if ( e.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           } 
+        n.children.add(e);
+        if (match(new Token("then", "THEN")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+        Node s=stmt_sequence();
+        if ( s.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           } 
+        n.children.add(s);
+        if((!scanner_output.empty())&& (scanner_output.peek().token_type.equals("ELSE"))){
+           if (match(new Token("else", "ELSE")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+           Node el=stmt_sequence();
+            if (el.name.equals("error")) {
+                return new Node("error", null, null, null, null);
+            }
+            n.children.add(el);
+           
+        }
+        if (match(new Token("end", "END")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+
+        return n;
+    }
+   
+   public static Node repeat_stmt(){
+        Node n=new Node();
+        if (match(new Token("repeat", "REPEAT")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+        n.name="repeat";
+        Node s=stmt_sequence();
+        if ( s.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           } 
+        n.children.add(s);
+        if (match(new Token("until", "UNTIL")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+         Node e=exp();
+        if ( e.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           }
+        n.children.add(e);
+
+        return n;
+    }
+   public static Node assign_stmt(){
+        Node n=new Node();
+        Token t=new Token();
+        if(!scanner_output.empty())
+            t=scanner_output.peek();
+        if (match(new Token(null, "IDENTIFIER")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+        n.name="assign";
+        n.value=t.token_value;
+        if (match(new Token(":=", "ASSIGN")).name.equals("error")) {
+               return new Node("error", null, null, null, null);
+           }
+        Node e=exp();
+        if ( e.name.equals("error")) {
+           return new Node("error", null, null, null, null);
+           } 
+        n.children.add(e);
+
+        return n;
+    }
 }
