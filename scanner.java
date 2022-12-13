@@ -541,7 +541,7 @@ public class Scanner {
    public static Node match(Token expected_token)
    {
        Node n = new Node();
-       if(scanner_output.peek().token_type.equals(expected_token.token_type))
+       if((!scanner_output.empty()) &&(scanner_output.peek().token_type.equals(expected_token.token_type)))
        {
            scanner_output.pop();
            n.name = "accept";
