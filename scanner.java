@@ -700,7 +700,156 @@ public class Scanner {
         n.type="stmt";
         return n;
     }
-    public static Node read_stmt()
+    public static Node exp()
+   {
+       Node left = simple_exp();
+       if((left.name).equals("error"))
+        {
+           left.name = "error";
+            return left;
+        }
+       Node root = left;
+       while((!scanner_output.empty()) && ((scanner_output.peek().token_value.equals("<")) || (scanner_output.peek().token_value.equals("="))))
+       {
+           Node nroot = new Node();
+           String v = scanner_output.peek().token_value;
+           nroot = match(scanner_output.peek());
+           if((nroot.name).equals("error"))
+            {
+               nroot.name = "error";
+                return nroot;
+            }
+           nroot = new Node("op", v,  new ArrayList<Node>(),null, "exp");
+           Node right = simple_exp();
+           if((right.name).equals("error"))
+            {
+               right.name = "error";
+                return right;
+            }
+           nroot.children.add(root);
+           nroot.children.add(right);
+           root = nroot;
+       }
+       return root;
+   }
+   public static Node simple_exp()
+   {
+       Node left = term();
+       if((left.name).equals("error"))
+        {
+           left.name = "error";
+            return left;
+        }
+       Node root = left;
+       while((!scanner_output.empty()) && ((scanner_output.peek().token_value.equals("+")) || (scanner_output.peek().token_value.equals("-"))))
+       {
+           Node nroot = new Node();
+           String v = scanner_output.peek().token_value;
+           //System.out.println("here 2");
+           nroot = match(scanner_output.peek());
+           //System.out.println("after: " +scanner_output.peek().token_value);
+           if((nroot.name).equals("error"))
+            {
+               nroot.name = "error";
+                return nroot;
+            }
+           nroot = new Node("op", v, new ArrayList<Node>(),null, "exp");
+           Node right = term();
+           if((right.name).equals("error"))
+            {
+               right.name = "error";
+                return right;
+            }
+           nroot.children.add(root);
+           nroot.children.add(right);
+           root = nroot;
+       }
+       return root;
+   }
+   public static Node term()
+   {
+       Node left = factor();
+       System.out.println(left.name);
+       if((left.name).equals("error"))
+        {
+           left.name = "error";
+            return left;
+        }
+       Node root = left;
+       while((!scanner_output.empty()) && ((scanner_output.peek().token_value.equals("*")) || (scanner_output.peek().token_value.equals("/"))))
+       {
+           Node nroot;
+           String v = scanner_output.peek().token_value;
+           nroot = match(scanner_output.peek());
+           if((nroot.name).equals("error"))
+            {
+               nroot.name = "error";
+                return nroot;
+            }
+           nroot = new Node("op", v, new ArrayList<Node>(),null, "exp");
+           Node right = factor();
+           if((right.name).equals("error"))
+            {
+               right.name = "error";
+                return right;
+            }
+           nroot.children.add(root);
+           nroot.children.add(right);
+           root = nroot;
+       }
+       return root;
+   }
+   public static Node factor()
+   {
+       Node root = new Node();
+       root.name = "error";
+       if(!scanner_output.empty())
+       {
+        if(scanner_output.peek().token_value.equals("("))
+        {
+            match(scanner_output.peek());
+            root = exp();
+            if((root.name).equals("error"))
+             {
+                root.name = "error";
+                 return root;
+             }
+            Node n = match(new Token(")","CLOSEDBRACKET"));
+            if((n.name).equals("error"))
+             {
+                n.name = "error";
+                 return n;
+             }
+        }
+        else if(scanner_output.peek().token_type.equals("NUMBER"))
+        {
+            //System.out.println("here 1");
+            String v = scanner_output.peek().token_value;
+            match(scanner_output.peek());
+            //System.out.println("after 1 :"+ scanner_output.peek().token_value);
+            root.name = "const";
+            root.value = v;
+            root.children = null;
+            root.sibling = null;
+            root.type = "exp";
+        }
+        else if(scanner_output.peek().token_type.equals("IDENTIFIER"))
+        {
+            String v = scanner_output.peek().token_value;
+            match(scanner_output.peek());
+            root.name = "id";
+            root.value = v;
+            root.children = null;
+            root.sibling = null;
+            root.type = "exp";
+        }
+        else {
+            root.name = "error";
+        }
+   }
+       return root;
+   }
+   public static Node read_stmt()
    {
         Node n  = new Node();
         n.name = "error";
@@ -713,6 +862,7 @@ public class Scanner {
         String v = "";
         if(!scanner_output.empty())
         {
+            System.out.println(scanner_output.peek().token_value);
             v = scanner_output.peek().token_value;
         }
         n = match(new Token("","IDENTIFIER"));
