@@ -20,7 +20,7 @@ class Token {
 class Node {
     String name;
     String value;
-    ArrayList<Node> children;
+    ArrayList<Node> children=new ArrayList<Node>();
     Node sibling;
     String type;
     public Node(){}
@@ -651,6 +651,7 @@ public class Scanner {
         if (match(new Token("end", "END")).name.equals("error")) {
                return new Node("error", null, null, null, null);
            }
+        n.type="stmt";
 
         return n;
     }
@@ -674,6 +675,7 @@ public class Scanner {
            return new Node("error", null, null, null, null);
            }
         n.children.add(e);
+        n.type="stmt";
 
         return n;
     }
@@ -695,7 +697,7 @@ public class Scanner {
            return new Node("error", null, null, null, null);
            } 
         n.children.add(e);
-
+        n.type="stmt";
         return n;
     }
     public static Node read_stmt()
