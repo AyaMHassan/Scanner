@@ -536,7 +536,8 @@ public class Scanner {
            Token t = new Token(tv[0], tv[1].substring(0, tv[1].length() - 1));
            scanner_output.push(t);
        }
-      return null; 
+       Node m=stmt_sequence();
+      return m; 
    }
    public static Node match(Token expected_token)
    {
