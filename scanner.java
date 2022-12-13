@@ -698,4 +698,52 @@ public class Scanner {
 
         return n;
     }
+    public static Node read_stmt()
+   {
+        Node n  = new Node();
+        n.name = "error";
+        n = match(new Token("read","READ"));
+        if((n.name).equals("error"))
+         {
+            n.name = "error";
+             return n;
+         }
+        String v = "";
+        if(!scanner_output.empty())
+        {
+            v = scanner_output.peek().token_value;
+        }
+        n = match(new Token("","IDENTIFIER"));
+        if((n.name).equals("error"))
+         {
+            n.name = "error";
+             return n;
+         }
+        n = new Node("read", v, null, null, "stmt");
+       return n;
+   }
+      public static Node write_stmt()
+   {
+        Node root  = new Node();
+        root.name = "error";
+        root = match(new Token("write","WRITE"));
+        if((root.name).equals("error"))
+         {
+            root.name = "error";
+             return root;
+         }
+        Node n = exp();
+        if((n.name).equals("error"))
+         {
+            n.name = "error";
+             return n;
+         }
+        root.name = "write";
+        root.value = null;
+        root.children = new ArrayList<Node>();
+        root.children.add(n);
+        root.sibling = null;
+        root.type = "stmt";
+       return root;
+   }
 }
