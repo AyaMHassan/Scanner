@@ -39,13 +39,13 @@ public class Scanner {
     static Stack<Token> scanner_output = new Stack<>();  
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-       String s = read("D:\\Old data 26-11-2020\\Documents\\bas\\example.txt");
+       String s = read("C:\\Users\\DELL\\Downloads\\t7\\error.txt");
        ArrayList<String> a=scanner(s);
 //       for (int i = 0; i < a.size() ; i++)
 //       {
 //           System.out.print(a.get(i));
 //       }
-       parser(a);
+       Node b=parser(a);
        Node n = match(new Token("if", "IF"));
        System.out.println(n.name);
        while(!scanner_output.empty())
